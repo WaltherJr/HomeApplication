@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.spotify.SpotifyPlayerFragment">
+
+    <WebView
+        android:id="@+id/wvSpotifyPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"/>
+
+    <FrameLayout
+        android:id="@+id/videoListFrame"
+        android:animateLayoutChanges="true"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:background="@drawable/rounded_corner"
+        android:clipToOutline="false"
+        android:elevation="10dp"
+        android:outlineSpotShadowColor="@color/black"
+        android:outlineAmbientShadowColor="@color/black"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/goBackBtn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/goback"/>
+
+            <Button
+                android:id="@+id/goForwardBtn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/goforward"/>
+
+            <Button
+                android:id="@+id/minimizeWindowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/minimize"/>
+
+            <Button
+                android:id="@+id/maximizeWindowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/maximize"/>
+
+            <Button
+                android:id="@+id/closeWindowBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/close"/>
+
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/wvSpotifyPlayerVideoBrowser"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="fill_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+</FrameLayout>

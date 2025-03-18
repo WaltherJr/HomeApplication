@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <group android:name="indicator" android:translateY="45">
+        <path android:name="triangle_1"
+            android:pathData="M50,10L90,10L50,50L10,10"
+            android:fillColor="@color/black" />
+    </group>
+</vector>

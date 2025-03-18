@@ -1,0 +1,28 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: gainsboro;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgb(120, 120, 120);
+  padding: 15px 20px;
+  border-radius: 7px;
+}
+
+.ha-text-align-center {
+  text-align: center;
+}
+
+.ha-popup-title {
+  font-size: 120%;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  width: calc(100% + 40px);
+  margin-top: -20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 10px 20px;
+  background-color: darkgoldenrod;
+}

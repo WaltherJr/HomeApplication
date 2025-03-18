@@ -1,0 +1,18 @@
+{% for room in rooms %}
+<div class="{{'device-room ' + room.roomTypeClassName }}">
+    <h3 class="device-room-heading">{{ room.roomName | default(roomDefaultName) }}</h3>
+    {% for device in room.devices %}
+    <div class="device-room-content">
+        <div class="{{ deviceItemClasses }}" data-device-id="{{ device.id }}" data-device-type="{{ device.deviceType }}">
+            <span class="device-custom-name">{{ device.attributes.customName | default(deviceItemDefaultCustomName) }}</span>
+            {% if device.deviceType equals "outlet" or device.deviceType equals "light" %}
+                <button class="device-can-toggle-standby">&nbsp;</button>
+            {% endif %}
+            {% if device.attributes.model.startsWith("STOFTMOLN ceiling/wall lamp") %}
+                <input type="range" class="slider-light-level" min="0" max="100" value="{{ device.attributes.lightLevel }}" />
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}

@@ -1,0 +1,9 @@
+div[data-testid="product-container"] img {
+    mix-blend-mode: multiply;
+}
+ div.grocery-hidden {
+    display: none;
+}
+ div.selected-grocery > div[data-testid="vertical-product-container"] {
+    background-color: gainsboro;
+}

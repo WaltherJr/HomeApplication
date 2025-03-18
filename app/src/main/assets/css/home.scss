@@ -1,0 +1,146 @@
+
+$on-off-switch-height: 25px;
+$color-beige-brown: #c5953d;
+
+body {
+    padding: 15px;
+}
+
+.device-custom-name {
+    font-size: 19px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 2px 0px rgba(0,0,0,.6);
+}
+
+.ikea-home-device {
+    padding: 10px;
+    position: relative;
+}
+
+.device-room {
+    background-size: 150% auto;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 2px 3px rgba(0,0,0,.4);
+}
+
+.device-room.room-type-laundry-room {
+    background-image: url('file:///android_asset/images/rooms/a-laundry-room.jpg');
+}
+.device-room.room-type-living-room {
+    background-image: url('file:///android_asset/images/rooms/a-living-room.jpg');
+}
+.device-room.room-type-bedroom {
+    background-image: url('file:///android_asset/images/rooms/a-bedroom.jpg');
+}
+.device-room.room-type-hallway {
+    background-image: url('file:///android_asset/images/rooms/a-hallway.jpg');
+}
+.device-room.room-type-unknown {
+    background-image: url('file:///android_asset/images/rooms/a-room.jpg');
+}
+
+.device-room:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+.device-room > h3 {
+    margin: 0;
+    padding: 20px;
+    font-size: 24px;
+    color: rgba(255,255,255,1);
+    text-shadow: 0 2px 1px rgba(0,0,0,.7);
+    background-color: gray;
+    background-image: radial-gradient(circle at 0% 0%, #4E5E65, #708690);
+    box-shadow: inset 0 -2px rgba(255,255,255,.3), inset 0 2px rgba(0,0,0,.3);
+}
+
+.slider-light-level {
+    display: block;
+    width: 100%;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: darkgray;
+  margin-top: -2px;
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.5));
+  border-radius: 50%;
+}
+
+button.device-can-toggle-standby {
+    background-color: gray;
+    float: right;
+    display: block;
+    border: none;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    box-shadow: none;
+    width: 80px;
+    padding: 0;
+    height: $on-off-switch-height;
+    border-radius: $on-off-switch-height;
+    transition: background-color 1s ease;
+}
+button.device-can-toggle-standby::before {
+    content: '';
+    display: block;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $color-beige-brown;
+    width: 30px;
+    height: $on-off-switch-height;
+    border-radius: $on-off-switch-height;
+    transition: left 1s ease;
+}
+button.device-can-toggle-standby.is-active {
+    background-color: seagreen !important;
+}
+button.device-can-toggle-standby.is-active::before {
+    left: calc(100% - 30px);
+}
+
+button.device-can-toggle-standby.is-active {
+}
+
+button.device-can-toggle-standby.is-disabled {
+    filter: grayscale(1);
+}
+
+.ikea-home-device {
+    min-height: 100px;
+    border: 2px solid rgba(255,255,255,.4);
+    box-sizing: border-box;
+}
+
+.ikea-home-device.device-id-shown::before {
+    content: 'id: ' attr(data-device-id) ', type: ' attr(data-device-type);
+    margin: 0 -10px;
+    font-size: 90%;
+    display: block;
+    padding: 7px;
+    width: calc(100% + 20px);
+    background: red;
+}
+
+.devices-table .potential-light-source {
+    border: 3px solid green;
+}

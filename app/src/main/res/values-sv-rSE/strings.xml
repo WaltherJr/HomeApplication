@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">HomeAutomation2</string>
+    <string name="ok">ok</string>
+    <string name="on">på</string>
+    <string name="off">av</string>
+    <string name="mute">stäng av ljud</string>
+    <string name="unmute">slå på ljud</string>
+    <string name="goback">&lt;</string>
+    <string name="goforward">&gt;</string>
+    <string name="restore">återställ</string>
+    <string name="minimize">minimera</string>
+    <string name="maximize">maximera</string>
+    <string name="close">stäng</string>
+    <string name="room_default_name">&lt;Rum utan namn&gt;</string>
+    <string name="device_item_default_custom_name">&lt;Enhet utan namn&gt;</string>
+    <string name="laundry_time">tvättid</string>
+    <string name="laundry_booking">tvättbokning</string>
+    <string name="laundry_bookings">tvättbokningar</string>
+    <string name="removed">borttagen</string>
+    <string name="already_removed_from">redan borttagen från</string>
+    <string name="already_made">Redan utförd</string>
+    <string name="created">skapad</string>
+    <string name="from">från</string>
+    <string name="calendar">kalender</string>
+    <string name="to_1">till</string>
+    <string name="to_2">att</string>
+    <string name="no">inga</string>
+    <string name="for_">för</string>
+    <string name="remove">ta bort</string>
+    <string name="google_account">Google-kontot</string>
+    <string name="ping">pinga %s</string>
+    <string name="asus_server">ASUS servern</string>
+    <string name="radxa_rock_server">Radxa Rock servern</string>
+    <string name="show_hdmi_cec_topology">Visa HDMI CEC topologi</string>
+
+    <string name="no_laundry_booking_to_remove">Ingen tvättbokning att ta bort</string>
+    <string name="no_calendar_for_the_google_account">Ingen kalender för Google-kontot %s</string>
+    <string name="laundry_time_from_to">Tvättid från %s till %s</string>
+    <string name="laundry_booking_already_made_for_this_point_in_time">Tvättbokning redan gjord för denna tidpunkt</string>
+    <string name="laundry_booking_already_removed">Tvättboking redan borttagen</string>
+    <string name="laundry_booking_removed">Tvättboking borttagen</string>
+    <string name="laundry_booking_created">Tvättboking skapad</string>
+
+    <!-- Menu items -->
+    <string name="action_settings">Inställningar</string>
+    <string name="home_label">Hem</string>
+    <string name="laundry_booking_label">Tvätt</string>
+    <string name="grocery_list_label">Matlista</string>
+    <string name="on_tv_label">På TV</string>
+    <string name="spotify_player_label">Spotify</string>
+    <string name="turn_off_apartment_lights">Släck ner lägenheten</string>
+    <string name="watch_todays_newscast_label">Kolla dagens nyhetssändning</string>
+    <string name="play_music_video">Spela musikvideo</string>
+    <string name="browse_song_on_youtube">Bläddra låt på YouTube</string>
+    <string name="browse_artist_on_youtube">Bläddra artist på YouTube</string>
+
+    <!-- Month names -->
+    <string name="month_1">Januari</string>
+    <string name="month_2">Februari</string>
+    <string name="month_3">Mars</string>
+    <string name="month_4">April</string>
+    <string name="month_5">Maj</string>
+    <string name="month_6">Juni</string>
+    <string name="month_7">Juli</string>
+    <string name="month_8">Augusti</string>
+    <string name="month_9">September</string>
+    <string name="month_10">Oktober</string>
+    <string name="month_11">November</string>
+    <string name="month_12">December</string>
+</resources>
