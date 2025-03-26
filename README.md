@@ -1,5 +1,9 @@
 Backgrounds, UIs, icons etc. can be downloaded from https://www.freepik.com
 
+App icons: https://www.123rf.com/clipart-vector/luxury_rustic_home_interior.html
+
+HDMI CEC: https://www.cec-o-matic.com/
+
 SVG icons generated at https://www.vondy.com/free-ai-icon-generator--r8yJWaGJ
 
 ```

@@ -106,6 +106,14 @@
                 android:width="60dp"
                 android:scaleType="fitCenter"/>
 
+            <com.google.android.material.slider.Slider
+                android:id="@+id/volumeSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0"
+                android:valueTo="100"
+                android:stepSize="1" />
+
             <ImageButton
                 android:id="@+id/turnOffApartmentLightsBtn"
                 android:layout_width="100dp"

@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class JSInjection {
-    private JavaScript[] scripts;
+    private Javascript[] scripts;
 
-    public JSInjection(JavaScript... scripts) {
+    public JSInjection(Javascript... scripts) {
         this.scripts = scripts;
     }
 }

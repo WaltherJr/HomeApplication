@@ -8,10 +8,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Builder
 @Getter
 @Setter
-public class DevicePatchRequest extends DirigeraRequest {
-    public Device[] devices;
+public class DevicePatchRequest extends DirigeraRequest<Void> {
+    private String deviceId;
+    private Device[] patchBody;
 
-    public static <T> void execute(WebClient webClient, String deviceId, T patchBody) { // TODO: add error handling and throw
+    public DevicePatchRequest(String deviceId, Device[] patchBody) {
+        this.deviceId = deviceId;
+        this.patchBody = patchBody;
+    }
+
+    public Void execute(WebClient webClient) {
         webClient.patch()
                 .uri("v1/devices/{id}", deviceId)
                 .bodyValue(patchBody)
@@ -19,5 +25,7 @@ public class DevicePatchRequest extends DirigeraRequest {
                 //.onStatus(HttpStatus::isError, DevicePatchRequest::onError)
                 //.onStatus(HttpStatus::is2xxSuccessful, DevicePatchRequest::onSuccess)
                 .toBodilessEntity().block();
+
+        return null;
     }
 }

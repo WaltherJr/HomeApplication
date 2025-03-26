@@ -16,7 +16,7 @@ import com.eriksandsten.homeautomation2.jscontroller.SpotifyPlayerJSController;
 import com.eriksandsten.homeautomation2.utils.HomeAutomationUtils;
 import com.eriksandsten.homeautomation2.utils.injection.DOMTarget;
 import com.eriksandsten.homeautomation2.utils.injection.JSInjection;
-import com.eriksandsten.homeautomation2.utils.injection.LocalJavaScript;
+import com.eriksandsten.homeautomation2.utils.injection.InlineJavascript;
 import com.eriksandsten.homeautomation2.webviewclient.SpotifyPlayerChromeClient;
 import org.springframework.http.HttpHeaders;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class SpotifyPlayerFragment extends BaseFragment {
         WebView webView = view.findViewById(R.id.wvSpotifyPlayer);
 
         HomeAutomationUtils.setupDefaultWebView(webView,
-                new JSInjection(new LocalJavaScript("spotify-player-script", DOMTarget.BODY, spotifyPlayerJavaScript)), null,
+                new JSInjection(new InlineJavascript("spotify-player-script", DOMTarget.BODY, spotifyPlayerJavaScript)), null,
                 spotifyPlayerJSController, this::onPageFinishedCallback, this::shouldInterceptRequestCallback, null, new SpotifyPlayerChromeClient());
 
         videoListBrowser = new VideoListBrowser(view, webView, spotifyPlayerJSController, this);
@@ -93,7 +93,7 @@ public class SpotifyPlayerFragment extends BaseFragment {
     }
 
     private WebResourceResponse shouldInterceptRequestCallback(WebResourceRequest request, WebView webView, WebResourceResponse defaultResponse) {
-        if (request.getUrl().toString().startsWith("https://open.spotifycdn.com/cdn/build/mobile-web-player/vendor~mobile-web-player")) {
+        if (request.getUrl().toString().startsWith(getAssociatedActivity().getProperty("spotify_player_main_js_url_prefix"))) {
             try {
                 String url = request.getUrl().toString();
                 OkHttpClient httpClient = new OkHttpClient();
@@ -107,7 +107,7 @@ public class SpotifyPlayerFragment extends BaseFragment {
                 String finalResponseJavascript = originalResponseBody;
 
                 if (m.find()) {
-                    finalResponseJavascript = SpotifyPlayerHelper.injectContextMenuItems(finalResponseJavascript,
+                    finalResponseJavascript = SpotifyPlayerHelper.addContextMenuItems(finalResponseJavascript,
                             new SpotifyPlayerHelper.MenuItem("play-music-video", getString(R.string.play_music_video)),
                             new SpotifyPlayerHelper.MenuItem("browse-song-youtube", getString(R.string.browse_song_on_youtube)),
                             new SpotifyPlayerHelper.MenuItem("browse-artist-youtube", getString(R.string.browse_artist_on_youtube)));

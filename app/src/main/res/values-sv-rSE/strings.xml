@@ -5,11 +5,11 @@
     <string name="off">av</string>
     <string name="mute">stäng av ljud</string>
     <string name="unmute">slå på ljud</string>
-    <string name="goback">&lt;</string>
-    <string name="goforward">&gt;</string>
+    <string name="back">&lt;</string>
+    <string name="forward">&gt;</string>
     <string name="restore">återställ</string>
-    <string name="minimize">minimera</string>
-    <string name="maximize">maximera</string>
+    <string name="minimize">min</string>
+    <string name="maximize">max</string>
     <string name="close">stäng</string>
     <string name="room_default_name">&lt;Rum utan namn&gt;</string>
     <string name="device_item_default_custom_name">&lt;Enhet utan namn&gt;</string>
@@ -27,6 +27,7 @@
     <string name="no">inga</string>
     <string name="for_">för</string>
     <string name="remove">ta bort</string>
+    <string name="home">hem</string>
     <string name="google_account">Google-kontot</string>
     <string name="ping">pinga %s</string>
     <string name="asus_server">ASUS servern</string>

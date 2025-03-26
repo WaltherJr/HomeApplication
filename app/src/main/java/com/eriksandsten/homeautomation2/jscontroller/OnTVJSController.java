@@ -2,13 +2,15 @@ package com.eriksandsten.homeautomation2.jscontroller;
 
 import android.webkit.JavascriptInterface;
 import com.eriksandsten.homeautomation2.fragments.BaseFragment;
-import com.eriksandsten.homeautomation2.helper.OnTVHelper;
+import com.eriksandsten.homeautomation2.helper.ASUSMediaClient;
+import com.eriksandsten.homeautomation2.helper.HttpHelper;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.FormBody;
 
 public class OnTVJSController extends JSController {
     private static Map<String, String> subscribedTVChannels = new HashMap<>();
+    private ASUSMediaClient asusMediaClient;
 
     static {
         subscribedTVChannels.put("0148", "20001"); // SVT1
@@ -32,6 +34,7 @@ public class OnTVJSController extends JSController {
 
     public OnTVJSController(BaseFragment fragment) {
         super(fragment);
+        asusMediaClient = new ASUSMediaClient(fragment.getAssociatedActivity());
     }
 
     @JavascriptInterface
@@ -46,19 +49,20 @@ public class OnTVJSController extends JSController {
 
     @JavascriptInterface
     public String setActiveTVChannel(String channelId) {
-        return OnTVHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"),
-                "/tv/channel/active", new FormBody.Builder().add("channelId", channelId).build());
+        Object returnValue = asusMediaClient.setCurrentTVChannel(channelId);
+        return (String) returnValue;
     }
 
     @JavascriptInterface
     public String viewTVChannelEPG() {
-        return OnTVHelper.performGetRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"), "/tv/channel/epg");
+        Object returnValue = asusMediaClient.setCurrentTVChannel("EPG");
+        return (String) returnValue;
     }
 
     @JavascriptInterface
     public String setActiveTVChannelPlayState(String isPlaying) {
-        return OnTVHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"),
-                "/tv/channel/active/playstate", new FormBody.Builder().add("isPlaying", isPlaying).build());
+        Object returnValue = asusMediaClient.setTVChannelPlayStateRequest(Boolean.parseBoolean(isPlaying));
+        return (String) returnValue;
     }
 
     @JavascriptInterface
@@ -72,18 +76,17 @@ setTimeout(function() {
 
     @JavascriptInterface
     public void switchTVHDMIChannel(String channel) {
-        String response = OnTVHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("radxa_rock_media_server_url"),
-                "/tv/hdmi/channel", new FormBody.Builder().add("channel", channel).build());
+        String response = HttpHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("radxa_rock_server_url"),
+                "/tv/hdmi/channel", "{\"channel\": \"%s\"}".formatted(channel));
     }
 
     @JavascriptInterface
     public String turnOnTVChannel(String channelId) {
-        return OnTVHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"), "/tv", new FormBody.Builder()
-                .add("channelId", channelId).build());
+        return HttpHelper.performPutRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"), "/tv", "{channel: \"%s\"}".formatted(channelId));
     }
 
     @JavascriptInterface
     public String getActiveTVChannel() {
-        return OnTVHelper.performGetRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"), "/tv/channel/active", 200);
+        return HttpHelper.performGetRequest(fragment.getAssociatedActivity().getProperty("asus_media_server_url"), "/tv/channel/active", 200);
     }
 }

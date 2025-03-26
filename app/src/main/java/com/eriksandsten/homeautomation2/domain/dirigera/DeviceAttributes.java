@@ -23,14 +23,14 @@ public class DeviceAttributes implements Serializable {
     public Boolean isOn;
 
     public String startupOnOff;
-    public Short lightLevel;
-    public Short startUpConcurrentLevel;
+    public Integer lightLevel;
+    public Integer startUpConcurrentLevel;
     public String identifyStarted;
-    public Short identifyPeriod;
+    public Integer identifyPeriod;
     public Boolean permittingJoin;
     public String otaStatus;
     public String otaState;
-    public Short otaProgress;
+    public Integer otaProgress;
     public String otaPolicy;
     public String otaScheduleStart;
     public String otaScheduleEnd;

@@ -8,12 +8,12 @@ public class CapitalizedResourceString extends ResourceString {
     }
 
     public static ResourceString from(int resourceId) {
-        return ResourceString.from(resourceId);
+        return new CapitalizedResourceString(resourceId);
     }
 
     @Override
     public String getString(Resources resources) {
-        String s = resources.getString(resourceId);
-        return s.charAt(0) + s.substring(1);
+        String str = resources.getString(resourceId);
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

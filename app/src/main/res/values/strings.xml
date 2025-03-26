@@ -5,12 +5,12 @@
     <string name="off">Off</string>
     <string name="mute">Mute</string>
     <string name="unmute">Unmute</string>
-    <string name="goback">&lt;</string>
-    <string name="goforward">&gt;</string>
+    <string name="back">&lt;</string>
+    <string name="forward">&gt;</string>
     <string name="restore">Restore</string>
-    <string name="minimize">Minimize</string>
-    <string name="maximize">Maximize</string>
-    <string name="close">Close</string>
+    <string name="minimize">min</string>
+    <string name="maximize">max</string>
+    <string name="close">close</string>
     <string name="room_default_name">&lt;Untitled room&gt;</string>
     <string name="device_item_default_custom_name">&lt;Untitled device&gt;</string>
     <string name="laundry_time">laundry time</string>
@@ -27,6 +27,7 @@
     <string name="for_">for</string>
     <string name="no">no</string>
     <string name="remove">remove</string>
+    <string name="home">home</string>
     <string name="google_account">Google account</string>
     <string name="ping">ping %s</string>
     <string name="asus_server">ASUS server</string>

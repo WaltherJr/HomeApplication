@@ -19,8 +19,8 @@ import com.eriksandsten.homeautomation2.R;
 import com.eriksandsten.homeautomation2.jscontroller.JSController;
 import com.eriksandsten.homeautomation2.utils.injection.CSSInjection;
 import com.eriksandsten.homeautomation2.utils.injection.JSInjection;
-import com.eriksandsten.homeautomation2.utils.injection.JavaScript;
-import com.eriksandsten.homeautomation2.utils.injection.LocalStylesheet;
+import com.eriksandsten.homeautomation2.utils.injection.Javascript;
+import com.eriksandsten.homeautomation2.utils.injection.InlineStylesheet;
 import com.eriksandsten.homeautomation2.webviewclient.DefaultWebChromeClient;
 import com.eriksandsten.homeautomation2.webviewclient.DefaultWebViewClient;
 import java.io.IOException;
@@ -38,6 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import io.pebbletemplates.pebble.PebbleEngine;
+import io.pebbletemplates.pebble.loader.FileLoader;
 import io.pebbletemplates.pebble.loader.StringLoader;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
 
@@ -103,13 +104,15 @@ public final class HomeAutomationUtils {
 
     private static final Pattern imageFilePattern = Pattern.compile("\\.(:gif|png|jpg)$");
 
+    public static String getDefaultHTMLDocumentTitle(Context context, String pageTitle) {
+        return String.format("%s - %s", context.getApplicationInfo().loadLabel(context.getPackageManager()), pageTitle);
+    }
+
     public static void showMessageBox(String title, String message, Fragment fragment) {
         AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton(fragment.getString(R.string.ok), (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setPositiveButton(fragment.getContext().getString(R.string.ok), (dialog, which) -> dialog.dismiss());
         builder.show();
     }
 
@@ -221,18 +224,18 @@ public final class HomeAutomationUtils {
         editor.apply();
     }
 
-    public static void injectStylesheet(WebView webView, LocalStylesheet stylesheet) {
+    public static void injectStylesheet(WebView webView, InlineStylesheet stylesheet) {
         String encodedStyleSheet = Base64.getEncoder().encodeToString(stylesheet.getStylesheetContent().getBytes());
         String finalCSSInHead = "javascript:(function(){" + ATOB_UTF8_FUNCTION + LOAD_CSS_IN_HEAD.formatted(stylesheet.getStylesheetName(),
                 stylesheet.getStylesheetName(), encodedStyleSheet) + "})();";
         webView.post(() -> webView.evaluateJavascript(finalCSSInHead, null));
     }
 
-    public static void injectJavaScript(WebView webView, JavaScript javaScript) {
+    public static void injectJavaScript(WebView webView, Javascript javaScript) {
         injectJavaScript(webView, javaScript, null);
     }
 
-    public static void injectJavaScript(WebView webView, JavaScript javaScript, ValueCallback<String> resultCallback) {
+    public static void injectJavaScript(WebView webView, Javascript javaScript, ValueCallback<String> resultCallback) {
         final String jsInjectionCode = "javascript:(function(){" + javaScript.getInjectionCode() + "})();";
         webView.post(() -> webView.evaluateJavascript(jsInjectionCode, resultCallback));
     }

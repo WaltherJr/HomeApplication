@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * Kontext-menyn för en låt skapas i https://open.spotifycdn.com/cdn/build/mobile-web-player/vendor~mobile-web-player.a5ed9525.js (Lägg till custom entries)
+ * The context menu for a song is created in https://open.spotifycdn.com/cdn/build/mobile-web-player/vendor~mobile-web-player.a5ed9525.js
  */
 public final class SpotifyPlayerHelper {
     public record MenuItem(String actionId, String text) {}
 
-    public static String injectContextMenuItems(String originalJavaScript, MenuItem... menuItemStr) {
+    public static String addContextMenuItems(String originalJavaScript, MenuItem... menuItemStr) {
         // String working1 = Arrays.stream(menuItemStr).map(menuItem -> "z.insertAdjacentHTML('beforebegin', z.outerHTML.replace('Visa spår', '" + menuItem.text + "'))").collect(Collectors.joining(","));
         String insertAdjacentHTMLSnippet = Arrays.stream(menuItemStr).map(menuItem -> "z.insertAdjacentHTML('beforebegin', z.outerHTML.replace('Visa spår', '%s').replace('<button', '<button data-action-id=\"%s\"'))"
                 .formatted(menuItem.text, menuItem.actionId)).collect(Collectors.joining(","));

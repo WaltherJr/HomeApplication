@@ -12,10 +12,10 @@
         android:weightSum="1"/>
 
     <FrameLayout
-        android:id="@+id/videoListFrame"
+        android:id="@+id/videoListBrowserWindow"
         android:animateLayoutChanges="true"
-        android:layout_width="450dp"
-        android:layout_height="450dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/rounded_corner"
         android:clipToOutline="false"
         android:elevation="10dp"
@@ -34,14 +34,14 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/goback"/>
+                android:text="@string/back"/>
 
             <Button
                 android:id="@+id/goForwardBtn"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/goforward"/>
+                android:text="@string/forward"/>
 
             <Button
                 android:id="@+id/minimizeWindowBtn"

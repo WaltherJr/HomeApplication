@@ -10,11 +10,11 @@ import com.eriksandsten.homeautomation2.R;
 import com.eriksandsten.homeautomation2.jscontroller.OnTVJSController;
 import com.eriksandsten.homeautomation2.utils.injection.CSSInjection;
 import com.eriksandsten.homeautomation2.utils.injection.DOMTarget;
-import com.eriksandsten.homeautomation2.utils.injection.LocalJavaScript;
+import com.eriksandsten.homeautomation2.utils.injection.InlineJavascript;
 import com.eriksandsten.homeautomation2.utils.HomeAutomationUtils;
 import com.eriksandsten.homeautomation2.utils.injection.JSInjection;
 import com.eriksandsten.homeautomation2.webviewclient.DefaultWebChromeClient;
-import com.eriksandsten.homeautomation2.utils.injection.LocalStylesheet;
+import com.eriksandsten.homeautomation2.utils.injection.InlineStylesheet;
 
 public class OnTVFragment extends BaseFragment {
     private String onTVJavaScript;
@@ -36,8 +36,8 @@ public class OnTVFragment extends BaseFragment {
         OnTVJSController onTVJsController = new OnTVJSController(this);
 
         HomeAutomationUtils.setupDefaultWebView(webView,
-                new JSInjection(new LocalJavaScript("on-tv-script", DOMTarget.BODY, onTVJavaScript)),
-                new CSSInjection(new LocalStylesheet("on-tv-stylesheet", onTVCSS)),
+                new JSInjection(new InlineJavascript("on-tv-script", DOMTarget.BODY, onTVJavaScript)),
+                new CSSInjection(new InlineStylesheet("on-tv-stylesheet", onTVCSS)),
                 onTVJsController, null, null, null, new DefaultWebChromeClient());
         webView.post(() -> webView.loadUrl(getAssociatedActivity().getProperty("allente_tv_guide_url")));
 

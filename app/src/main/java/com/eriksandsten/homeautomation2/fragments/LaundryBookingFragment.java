@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.eriksandsten.homeautomation2.R;
 import com.eriksandsten.homeautomation2.activity.main.MainActivity;
+import com.eriksandsten.homeautomation2.domain.laundrybooking.AptusPortalCredentials;
 import com.eriksandsten.homeautomation2.domain.laundrybooking.LaundryBookingEvent;
 import com.eriksandsten.homeautomation2.jscontroller.LaundryBookingJSController;
 import com.eriksandsten.homeautomation2.utils.HomeAutomationUtils;
 import com.eriksandsten.homeautomation2.utils.injection.DOMTarget;
 import com.eriksandsten.homeautomation2.utils.injection.JSInjection;
-import com.eriksandsten.homeautomation2.utils.injection.LocalJavaScript;
+import com.eriksandsten.homeautomation2.utils.injection.InlineJavascript;
 import com.eriksandsten.homeautomation2.webviewclient.LaundryBookingChromeClient;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
@@ -23,7 +24,7 @@ public class LaundryBookingFragment extends BaseFragment {
     private String laundryBookingJavaScript;
     private String aptusPortalLoginScript;
     private String aptusPortalNavigateToBookingsScript;
-    private LaundryBookingEvent.AptusPortalCredentials aptusPortalCredentials;
+    private AptusPortalCredentials aptusPortalCredentials;
 
     @Getter
     private LaundryBookingChromeClient laundryBookingChromeClient;
@@ -32,7 +33,7 @@ public class LaundryBookingFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        aptusPortalCredentials = new LaundryBookingEvent.AptusPortalCredentials(getAssociatedActivity().getProperty("aptus_portal_username"), getAssociatedActivity().getProperty("aptus_portal_password"));
+        aptusPortalCredentials = new AptusPortalCredentials(getAssociatedActivity().getProperty("aptus_portal_username"), getAssociatedActivity().getProperty("aptus_portal_password"));
         laundryBookingJavaScript = HomeAutomationUtils.loadAssetFileAsString(getResources().getAssets(), "js/laundry booking/laundry_booking.js");
         aptusPortalLoginScript = HomeAutomationUtils.loadAssetFileAsString(getResources().getAssets(), "js/laundry booking/aptus_portal_login.js");
         aptusPortalNavigateToBookingsScript = HomeAutomationUtils.loadAssetFileAsString(getResources().getAssets(), "js/laundry booking/aptus_portal_navigate_to_bookings.js");
@@ -45,7 +46,7 @@ public class LaundryBookingFragment extends BaseFragment {
 
         WebView webView = view.findViewById(R.id.wvLaundryBooking);
         HomeAutomationUtils.setupDefaultWebView(webView,
-                new JSInjection(new LocalJavaScript("laundry-booking-script", DOMTarget.BODY, laundryBookingJavaScript)),
+                new JSInjection(new InlineJavascript("laundry-booking-script", DOMTarget.BODY, laundryBookingJavaScript)),
                 null, new LaundryBookingJSController(this), this::onPageFinishedCallback, null, null,
                 laundryBookingChromeClient);
         webView.post(() -> webView.loadUrl("https://engelsmannen4.safeteam.se/AptusPortalStyra/Account/Login?ReturnUrl=%2fAptusPortalStyra%2f"));

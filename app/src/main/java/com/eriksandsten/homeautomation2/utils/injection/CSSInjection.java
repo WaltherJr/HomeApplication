@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class CSSInjection {
-    private LocalStylesheet[] stylesheets;
+    private InlineStylesheet[] stylesheets;
 
-    public CSSInjection(LocalStylesheet... stylesheets) {
+    public CSSInjection(InlineStylesheet... stylesheets) {
         this.stylesheets = stylesheets;
     }
 }

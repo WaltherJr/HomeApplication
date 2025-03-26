@@ -32,6 +32,4 @@ public class LaundryBookingEvent {
         public LocalTime hoursFrom;
         public LocalTime hoursTo;
     }
-
-    public record AptusPortalCredentials(String username, String password) {}
 }

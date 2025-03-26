@@ -1,7 +1,4 @@
 setTimeout(function() {
-    var devicesHTML = javaInterface.getDeviceRooms();
-    $('#devicesList').append(devicesHTML);
-
     $('.device-room-heading').on('click', function() {
         $(this).siblings('.device-room-content').slideToggle();
     });

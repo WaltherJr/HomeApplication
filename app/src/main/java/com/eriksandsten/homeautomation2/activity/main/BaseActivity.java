@@ -10,35 +10,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Consumer;
 
 public class BaseActivity extends AppCompatActivity {
-    private final Properties properties = new Properties();
+    private final Properties applicationProperties = new Properties();
+    private final Properties secretProperties = new Properties();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try (InputStream applicationProps = getAssets().open("application.properties"); InputStream secretsProps = getAssets().open("secrets.properties")) {
-            properties.load(applicationProps);
-            properties.load(secretsProps);
+
+        try {
+            InputStream applicationProps = getAssets().open("application.properties");
+            InputStream secretsProps = getAssets().open("secrets.properties");
+            applicationProperties.load(applicationProps);
+            secretProperties.load(secretsProps);
+
         } catch (final IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getCause());
         }
     }
 
     public String getStringById(String stringId) {
         int resId = getResources().getIdentifier(stringId, "string", getPackageName());
         return resId != 0 ? getString(resId) : null;
-    }
-
-    public void getLocalizedResources(Locale locale, Consumer<Resources> localizedResourcesCallback) {
-        Context context = getBaseContext();
-        Configuration config = new Configuration(context.getResources().getConfiguration());
-        config.setLocale(locale);
-
-        Resources localizedResources = context.createConfigurationContext(config).getResources();
-        localizedResourcesCallback.accept(localizedResources);
     }
 
     public String getLocalizedStringById(String stringId, Locale locale) {
@@ -50,10 +48,6 @@ public class BaseActivity extends AppCompatActivity {
 
         int resId = getResources().getIdentifier(stringId, "string", getPackageName());
         return localizedResources.getString(resId);
-    }
-
-    public int getStringIdentifier(String stringId) {
-        return getResources().getIdentifier(stringId, "string", getPackageName());
     }
 
     public String getLocalizedString(int resId, Locale locale) {
@@ -69,8 +63,21 @@ public class BaseActivity extends AppCompatActivity {
         return localizedResources.getString(resId);
     }
 
+    public void getLocalizedResources(Locale locale, Consumer<Resources> localizedResourcesCallback) {
+        Context context = getBaseContext();
+        Configuration config = new Configuration(context.getResources().getConfiguration());
+        config.setLocale(locale);
+
+        Resources localizedResources = context.createConfigurationContext(config).getResources();
+        localizedResourcesCallback.accept(localizedResources);
+    }
+
+    public int getStringIdentifier(String stringId) {
+        return getResources().getIdentifier(stringId, "string", getPackageName());
+    }
+
     public String getProperty(String key) {
-        return properties.getProperty(key);
+        return Optional.ofNullable(applicationProperties.getProperty(key)).orElse(secretProperties.getProperty(key));
     }
 
     public Bitmap fetchDrawable(String filename) {

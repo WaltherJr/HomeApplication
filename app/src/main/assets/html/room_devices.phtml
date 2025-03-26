@@ -1,7 +1,7 @@
 {% for room in rooms %}
 <div class="{{'device-room ' + room.roomTypeClassName }}">
     <h3 class="device-room-heading">{{ room.roomName | default(roomDefaultName) }}</h3>
-    {% for device in room.devices %}
+    {% for device in room.associatedDevices %}
     <div class="device-room-content">
         <div class="{{ deviceItemClasses }}" data-device-id="{{ device.id }}" data-device-type="{{ device.deviceType }}">
             <span class="device-custom-name">{{ device.attributes.customName | default(deviceItemDefaultCustomName) }}</span>
