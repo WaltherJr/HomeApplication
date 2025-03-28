@@ -3,6 +3,8 @@
     <string name="ok">OK</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="volume_up">Volume up</string>
+    <string name="volume_down">Volume down</string>
     <string name="mute">Mute</string>
     <string name="unmute">Unmute</string>
     <string name="back">&lt;</string>
@@ -43,8 +45,7 @@
     <string name="laundry_booking_created">Laundry booking created</string>
 
     <!-- Menu items -->
-    <string name="action_settings">Settings</string>
-    <string name="home_label">Home</string>
+    <string name="settings">Settings</string>
     <string name="laundry_booking_label">Laundry</string>
     <string name="grocery_list_label">Grocery list</string>
     <string name="on_tv_label">On TV</string>

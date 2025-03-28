@@ -5,6 +5,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
@@ -80,7 +82,7 @@ public class BaseActivity extends AppCompatActivity {
         return Optional.ofNullable(applicationProperties.getProperty(key)).orElse(secretProperties.getProperty(key));
     }
 
-    public Bitmap fetchDrawable(String filename) {
+    public Bitmap fetchBitmap(String filename) {
         try {
             InputStream inputStream = getAssets().open(filename);
             return BitmapFactory.decodeStream(inputStream);
@@ -88,5 +90,8 @@ public class BaseActivity extends AppCompatActivity {
         } catch (final IOException e) {
             throw new RuntimeException(e.getCause());
         }
+    }
+    public BitmapDrawable fetchDrawable(String filename) {
+        return new BitmapDrawable(getResources(), fetchBitmap(filename));
     }
 }

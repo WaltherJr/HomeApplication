@@ -18,7 +18,7 @@ setTimeout(function() {
         for (const device in devices) {
             var button = $('[data-device-id="' + devices[device].id + '"] button.device-can-toggle-standby');
 
-            if (button.length == 1) {
+            if (button.length === 1) {
                 var isReachable = devices[device].isReachable;
                 var isOn = devices[device].attributes.isOn;
                 // alert(devices[device].attributes.customName + ' - isReachable: ' + isReachable + ', isOn: ' + isOn);

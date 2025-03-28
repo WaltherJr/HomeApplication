@@ -20,6 +20,11 @@ SVG icons generated at https://www.vondy.com/free-ai-icon-generator--r8yJWaGJ
   A round ceiling light | A table lamp | A large smart-TV | A small smart-TV | A Fractal Design Ridge PC chassi | A power outlet | Pleated blinds | A motion sensor
 ```
 
+***
+https://audiopro.zendesk.com/hc/en-us/community/posts/15533667054481-Using-Audio-Pro-with-Home-Assistant
+https://github.com/nagyrobi/home-assistant-custom-components-linkplay/tree/master
+***
+
 Använd Chaquopy för att använda Python i Android (Python behövs för pylips!)
 
 Background generation at: https://www.recraft.ai/project/a7ef78c6-8e99-4887-abf4-10f6a4544491
@@ -88,3 +93,5 @@ var accounts = AccountManager.get(getContext()).getAccountsByType(AccountManager
 var chooseAccountIntent = googleAccountCredentials.newChooseAccountIntent();
 chooseAccountActivityLauncher.launch(chooseAccountIntent);
 ```
+
+Copyright (c) 2025 Erik Sandsten, all rights reserved.

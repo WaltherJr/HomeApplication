@@ -2,15 +2,23 @@ package com.eriksandsten.homeautomation2.activity.main;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.viewpager2.widget.ViewPager2;
 import com.eriksandsten.homeautomation2.R;
+import com.eriksandsten.homeautomation2.domain.StandbyState;
 import com.eriksandsten.homeautomation2.fragments.BaseFragment;
 import com.eriksandsten.homeautomation2.fragments.MainViewPagerAdapter;
 import com.eriksandsten.homeautomation2.helper.ASUSMediaClient;
@@ -45,8 +53,12 @@ public class MainActivityGUI {
     private ImageButton muteButton;
     private ImageButton standbyButton;
     private ImageButton turnOffApartmentLightsButton;
-    private SpinnerWithData<Boolean> tvStandbySpinner;
-    private SpinnerWithData<Integer> hdmiChannelSpinner;
+    private TextView bluetoothSpeakersName;
+    private ImageButton bluetoothSpeakersVolumeUpBtn;
+    private ImageButton bluetoothSpeakersVolumeDownBtn;
+
+    private AppCompatSpinner tvStandbySpinner;
+    private AppCompatSpinner hdmiChannelSpinner;
     private int initialHeight;
     private int initialWidth;
     private float startY;
@@ -68,21 +80,26 @@ public class MainActivityGUI {
         this.asusMediaClient = new ASUSMediaClient(mainActivity);
         this.radxaRockClient = new RadxaRockClient(mainActivity);
 
-        turnOffApartmentLightsButton = (ImageButton) initComponent(R.id.turnOffApartmentLightsBtn, mainActivity.fetchDrawable("icons/light switch/lightswitch2.png"), null, null);
-        standbyButton = (ImageButton) initComponent(R.id.standbyBtn, mainActivity.fetchDrawable("icons/standby/standby1.png"), this::onStandbyButtonClick, null);
-        muteButton = (ImageButton) initComponent(R.id.muteBtn, mainActivity.fetchDrawable("icons/mute/mute2.png"), this::onMuteButtonClick, null);
+        turnOffApartmentLightsButton = (ImageButton) initComponent(R.id.turnOffApartmentLightsBtn, mainActivity.fetchBitmap("icons/light switch/lightswitch2.png"), null, null);
+        standbyButton = (ImageButton) initComponent(R.id.standbyBtn, mainActivity.fetchBitmap("icons/standby/standby1.png"), this::onStandbyButtonClick, null);
+        muteButton = (ImageButton) initComponent(R.id.muteBtn, mainActivity.fetchBitmap("icons/mute/mute2.png"), this::onMuteButtonClick, null);
         bottomPanel = (LinearLayout) initComponent(R.id.bottomPanel, null, null, this::onBottomPanelTouch);
-        tvStandbySpinner = new SpinnerWithData<>(context,
-                List.of(new SpinnerData<>(mainActivity.getString(R.string.on), Boolean.FALSE), new SpinnerData<>(mainActivity.getString(R.string.off), Boolean.TRUE)),
-                this::onTvStandbySpinnerItemSelected);
-        hdmiChannelSpinner = new SpinnerWithData<>(context,
-                List.of(new SpinnerData<>("HDMI 1", 1), new SpinnerData<>("HDMI 2", 2), new SpinnerData<>("HDMI 3", 3)),
-                this::onHdmiChannelSpinnerItemSelected);
+        bluetoothSpeakersName = (TextView) mainActivity.findViewById(R.id.bluetoothSpeakersName);
+        ImageView bluetoothSpeakersImageView = mainActivity.findViewById(R.id.bluetoothSpeakersIcon);
+        bluetoothSpeakersImageView.setImageBitmap(mainActivity.fetchBitmap("icons/speakers/bluetooth-speaker.png"));
+        bluetoothSpeakersVolumeUpBtn = (ImageButton) initComponent(R.id.bluetoothSpeakersVolumeUpBtn, mainActivity.fetchBitmap("icons/volume/volume-up-1.png"), this::onSpeakersVolumeUpButtonClick, null);
+        bluetoothSpeakersVolumeDownBtn = (ImageButton) initComponent(R.id.bluetoothSpeakersVolumeDownBtn, mainActivity.fetchBitmap("icons/volume/volume-down-1.png"), this::onSpeakersVolumeDownButtonClick, null);
+
         Slider slider = (Slider) mainActivity.findViewById(R.id.volumeSlider);
         slider.addOnChangeListener(this::onVolumeSliderChange);
 
         initTabAndViewPagerComponents();
         tabComponent.addOnTabSelectedListener(new OnTabSelectedListener(viewPagerComponent));
+
+        tvStandbySpinner = SpinnerWithData.factory(mainActivity, R.id.tvStandbySpinner, List.of(new SpinnerData<>(mainActivity.getString(R.string.on), Boolean.TRUE), new SpinnerData<>(mainActivity.getString(R.string.off), Boolean.FALSE)),
+                this::onTvStandbySpinnerItemSelected);
+        hdmiChannelSpinner = SpinnerWithData.factory(mainActivity, R.id.activeHDMIChannelSpinner,
+                List.of(new SpinnerData<>("HDMI 1", 1), new SpinnerData<>("HDMI 2", 2), new SpinnerData<>("HDMI 3", 3)), this::onHdmiChannelSpinnerItemSelected);
     }
 
     void initTabAndViewPagerComponents() {
@@ -103,20 +120,20 @@ public class MainActivityGUI {
         });
     }
 
-    public void onTvStandbySpinnerItemSelected(Object params) {
-        OnItemSelectedParams parameters = (OnItemSelectedParams) params;
-        SpinnerData<Integer> selectedItem = (SpinnerData<Integer>) parameters.parent().getItemAtPosition(parameters.position());
-        String response = HttpHelper.performPutRequest(mainActivity.getProperty("radxa_rock_server_url"), "/tv/hdmi-channel",
-                "{\"channel\": \"%s\"}".formatted(String.valueOf(selectedItem.getData())), 5000);
-        Toast.makeText(context, "Selected HDMI channel: " + selectedItem.getData(), Toast.LENGTH_SHORT).show();
+    public void onTvStandbySpinnerItemSelected(OnItemSelectedParams params) {
+        SpinnerData<Boolean> selectedItem = (SpinnerData<Boolean>) params.parent().getItemAtPosition(params.position());
+        Toast.makeText(context, "TV on: " + selectedItem.getData(), Toast.LENGTH_SHORT).show();
+        //radxaRockClient.setTVStandbyStateRequest(Boolean.TRUE.equals(selectedItem.getData()) ? StandbyState.ON : StandbyState.OFF);
+        /*String response = HttpHelper.performPutRequest(mainActivity.getProperty("radxa_rock_server_url"), "/tv/hdmi-channel",
+                "{\"channel\": \"%s\"}".formatted(String.valueOf(selectedItem.getData())), 5000);*/
     }
 
-    public void onHdmiChannelSpinnerItemSelected(Object params) {
-        OnItemSelectedParams parameters = (OnItemSelectedParams) params;
-        SpinnerData<Integer> selectedItem = (SpinnerData<Integer>) parameters.parent().getItemAtPosition(parameters.position());
-        String response = HttpHelper.performPutRequest(mainActivity.getProperty("radxa_rock_media_server_url"), "/tv/standby",
-                "{\"standby\": \"%s\"}".formatted(String.valueOf(selectedItem.getData())), 5000);
-        Toast.makeText(mainActivity, "On/off: " + selectedItem.getData(), Toast.LENGTH_SHORT).show();
+    public void onHdmiChannelSpinnerItemSelected(OnItemSelectedParams params) {
+        SpinnerData<Integer> selectedItem = (SpinnerData<Integer>) params.parent().getItemAtPosition(params.position());
+        Toast.makeText(mainActivity, "Selected HDMI channel: " + selectedItem.getData(), Toast.LENGTH_SHORT).show();
+        //radxaRockClient.setCurrentHDMIChannelRequest(selectedItem.getData());
+        /*String response = HttpHelper.performPutRequest(mainActivity.getProperty("radxa_rock_media_server_url"), "/tv/standby",
+                "{\"standby\": \"%s\"}".formatted(String.valueOf(selectedItem.getData())), 5000);*/
     }
 
     private void onVolumeSliderChange(Slider slider, float value, boolean fromUser) {
@@ -153,11 +170,23 @@ public class MainActivityGUI {
         return false;
     }
 
+    public void setBluetoothSpeakersText(String text) {
+        bluetoothSpeakersName.setText(text);
+    }
+
     public void onTurnOffApartmentLightsClick(View view) {
         DirigeraHelper.turnOffApartmentLightsAndPowerOutlets(mainActivity.getWebClient(), Long.parseLong(mainActivity.getProperty("turn_off_apartment_lights_initial_delay_in_ms")));
     }
 
-    static AtomicInteger a = new AtomicInteger(1);
+    public void onSpeakersVolumeUpButtonClick(View view) {
+        Toast.makeText(mainActivity, "Volume up!", Toast.LENGTH_SHORT).show();
+        mainActivity.getBluetoothSpeakers().volumeUp();
+    }
+
+    public void onSpeakersVolumeDownButtonClick(View view) {
+        Toast.makeText(mainActivity, "Volume down!", Toast.LENGTH_SHORT).show();
+        mainActivity.getBluetoothSpeakers().volumeDown();
+    }
 
     public void onMuteButtonClick(View view) {
         Boolean muted;
@@ -165,17 +194,14 @@ public class MainActivityGUI {
         if (mainActivity.getString(R.string.mute).contentEquals(muteButton.getContentDescription())) {
             muted = Boolean.TRUE;
             muteButton.setContentDescription(mainActivity.getString(R.string.unmute));
-            muteButton.setImageBitmap(mainActivity.fetchDrawable("icons/unmute/unmute1.png"));
+            muteButton.setImageBitmap(mainActivity.fetchBitmap("icons/unmute/unmute1.png"));
         } else {
             muted = Boolean.FALSE;
             muteButton.setContentDescription(mainActivity.getString(R.string.mute));
-            muteButton.setImageBitmap(mainActivity.fetchDrawable("icons/mute/mute2.png"));
+            muteButton.setImageBitmap(mainActivity.fetchBitmap("icons/mute/mute2.png"));
         }
 
         Object hello = radxaRockClient.pingServer();
-        Object returnValue1 = radxaRockClient.setCurrentHDMIChannelRequest(a.getAndIncrement());
-
-        // {"responseType":"SUCCESS","wrappedValue":{"responseBody":""}}
         Object returnValue = asusMediaClient.setMusicVideoMuteStateRequest(muted);
     }
 
@@ -185,11 +211,11 @@ public class MainActivityGUI {
         if (mainActivity.getString(R.string.on).contentEquals(standbyButton.getContentDescription())) {
             playing = Boolean.TRUE;
             standbyButton.setContentDescription(mainActivity.getString(R.string.off));
-            standbyButton.setImageBitmap(mainActivity.fetchDrawable("icons/standby/standby2.png"));
+            standbyButton.setImageBitmap(mainActivity.fetchBitmap("icons/standby/standby2.png"));
         } else {
             playing = Boolean.FALSE;
             standbyButton.setContentDescription(mainActivity.getString(R.string.on));
-            standbyButton.setImageBitmap(mainActivity.fetchDrawable("icons/standby/standby1.png"));
+            standbyButton.setImageBitmap(mainActivity.fetchBitmap("icons/standby/standby1.png"));
         }
 
         Object returnValue = asusMediaClient.setMusicVideoPlayStateRequest(playing);
