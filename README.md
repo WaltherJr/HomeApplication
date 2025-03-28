@@ -1,3 +1,15 @@
+# HomeApplication
+A smart [Android](https://www.android.com/) mobile home application, automating everyday tasks such as:
+
+* Making a laundry room reservation digitally (and adding a reminder in the user's [Google Calendar](https://calendar.google.com/))
+* [IKEA Dirigera](https://www.google.com/search?q=ikea+dirigera) smart home integration - control [IoT](https://en.wikipedia.org/wiki/Internet_of_things) lamps, power outtages, window blinds etc. in the app
+* Embedded Spotify music player with custom menu UI - able to schedule playing music videos directly from the song context menu
+
+WIP:
+* Smart TV guide and control
+* Grocery shopping functionality
+***
+
 Backgrounds, UIs, icons etc. can be downloaded from https://www.freepik.com
 
 App icons: https://www.123rf.com/clipart-vector/luxury_rustic_home_interior.html
@@ -19,6 +31,11 @@ SVG icons generated at https://www.vondy.com/free-ai-icon-generator--r8yJWaGJ
 - What motif?
   A round ceiling light | A table lamp | A large smart-TV | A small smart-TV | A Fractal Design Ridge PC chassi | A power outlet | Pleated blinds | A motion sensor
 ```
+
+***
+https://audiopro.zendesk.com/hc/en-us/community/posts/15533667054481-Using-Audio-Pro-with-Home-Assistant
+https://github.com/nagyrobi/home-assistant-custom-components-linkplay/tree/master
+***
 
 Använd Chaquopy för att använda Python i Android (Python behövs för pylips!)
 
@@ -88,3 +105,6 @@ var accounts = AccountManager.get(getContext()).getAccountsByType(AccountManager
 var chooseAccountIntent = googleAccountCredentials.newChooseAccountIntent();
 chooseAccountActivityLauncher.launch(chooseAccountIntent);
 ```
+
+***
+Copyright (c) 2025 Erik Sandsten, all rights reserved

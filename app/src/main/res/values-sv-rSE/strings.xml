@@ -3,6 +3,8 @@
     <string name="ok">ok</string>
     <string name="on">på</string>
     <string name="off">av</string>
+    <string name="volume_up">Volym upp</string>
+    <string name="volume_down">Volym ned</string>
     <string name="mute">stäng av ljud</string>
     <string name="unmute">slå på ljud</string>
     <string name="back">&lt;</string>
@@ -43,8 +45,7 @@
     <string name="laundry_booking_created">Tvättboking skapad</string>
 
     <!-- Menu items -->
-    <string name="action_settings">Inställningar</string>
-    <string name="home_label">Hem</string>
+    <string name="settings">Inställningar</string>
     <string name="laundry_booking_label">Tvätt</string>
     <string name="grocery_list_label">Matlista</string>
     <string name="on_tv_label">På TV</string>

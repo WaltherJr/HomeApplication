@@ -16,7 +16,6 @@ import com.eriksandsten.homeautomation2.domain.dirigera.DevicePatchRequest;
 import com.eriksandsten.homeautomation2.domain.dirigera.ListDevicesRequest;
 import com.eriksandsten.homeautomation2.utils.BluetoothSpeaker;
 import com.eriksandsten.homeautomation2.helper.DirigeraHelper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
@@ -56,7 +55,9 @@ public class MainActivity extends BaseActivity {
     @Getter
     public List<Room> roomsWithDevices;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private BluetoothSpeaker speakers;
+    @Getter
+    private BluetoothSpeaker bluetoothSpeakers;
+    @Getter
     private MainActivityGUI mainActivityGUI = new MainActivityGUI();
 
     private void initWebClientAndSSLContext() {
@@ -105,7 +106,7 @@ public class MainActivity extends BaseActivity {
         initDeviceListUpdater();
         devicesByRoom = wrappedDeviceList.getDevices().stream().collect(Collectors.groupingBy(device -> Optional.ofNullable(device.getRoom()).map(com.eriksandsten.homeautomation2.domain.dirigera.Room::getName).orElse("")));
         roomsWithDevices = devicesByRoom.entrySet().stream().map(entry -> new Room(entry.getKey(), Room.mapRoomNameToRoomType(entry.getKey()), entry.getValue())).collect(Collectors.toList());
-        speakers = new BluetoothSpeaker(this);
+        bluetoothSpeakers = new BluetoothSpeaker(this);
         mainActivityGUI.createGUI(getBaseContext(), this);
         loadGoogleAccountCredentials(getApplicationContext());
     }

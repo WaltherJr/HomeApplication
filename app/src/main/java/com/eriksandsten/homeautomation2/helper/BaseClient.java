@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import lombok.Getter;
 
 public abstract class BaseClient {
-    private static final ExecutorService asusMediaServerRequestExecutor = Executors.newSingleThreadExecutor();
+    private static final ExecutorService serverRequestExecutor = Executors.newSingleThreadExecutor();
     @Getter
     private final String serverUrl;
     private final int requestTimeoutInMs;
@@ -23,7 +23,7 @@ public abstract class BaseClient {
 
     protected Object performRequest(Callable<?> runnable) {
         try {
-            return asusMediaServerRequestExecutor.submit(runnable).get();
+            return serverRequestExecutor.submit(runnable).get();
 
         } catch (final ExecutionException | InterruptedException e) {
             throw new RuntimeException(e.getCause());

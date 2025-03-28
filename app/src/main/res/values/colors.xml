@@ -8,8 +8,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="medium_gray">#C0C0C0</color>
+    <color name="dark_gray">#484848</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tabs_color_bg">#65666A</color>
     <color name="tabs_color_fg">#adadad</color>
     <color name="tabs_indicator">#dcdcdc</color>
+
+    <color name="slider_track_color">#FF0000</color>
+    <color name="slider_track_active">#FF0000</color>
+    <color name="slider_track_inactive">#FF0000</color>
+    <color name="slider_thumb">#FF0000</color>
+    <color name="slider_tick_color">#FF0000</color>
+    <color name="slider_tick_active">#FF0000</color>
+    <color name="slider_tick_inactive">#FF0000</color>
 </resources>

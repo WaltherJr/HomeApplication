@@ -1,46 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.main.MainActivity">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:background="@color/tabs_color_bg"
-        app:tabTextColor="@color/tabs_color_fg"
-        app:tabSelectedTextColor="@color/tabs_color_fg"
-        app:tabIndicatorColor="@color/tabs_indicator"
-        app:tabIndicatorHeight="5dp"
-        android:padding="10dp"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabItem
-            android:text="@string/home_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.tabs.TabItem
-            android:text="@string/laundry_booking_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.tabs.TabItem
-            android:text="@string/grocery_list_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.tabs.TabItem
-            android:text="@string/on_tv_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.tabs.TabItem
-            android:text="@string/spotify_player_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.tabs.TabLayout>
+    <include layout="@layout/top_tab_navigation"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -48,81 +15,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <LinearLayout
-        android:id="@+id/bottomPanel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="50dp"
-        android:background="@color/tabs_color_bg">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/tabs_color_bg">
-
-            <com.eriksandsten.homeautomation2.utils.CustomTooltip
-                android:id="@+id/custom_tooltip1"
-                android:tooltipText="Hello there folks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <Spinner
-                android:id="@+id/tvStandbySpinner"
-                android:layout_width="100dp"
-                android:padding="10dp"
-                android:layout_height="wrap_content"
-                android:background="@color/cardview_light_background"/>
-
-            <Spinner
-                android:id="@+id/activeHDMIChannelSpinner"
-                android:layout_width="100dp"
-                android:padding="10dp"
-                android:layout_height="wrap_content"
-                android:background="@color/cardview_light_background"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/tabs_color_bg">
-
-            <ImageButton
-                android:id="@+id/muteBtn"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/mute"
-                android:width="60dp"
-                android:scaleType="fitCenter"/>
-
-            <ImageButton
-                android:id="@+id/standbyBtn"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/on"
-                android:width="60dp"
-                android:scaleType="fitCenter"/>
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/volumeSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:valueFrom="0"
-                android:valueTo="100"
-                android:stepSize="1" />
-
-            <ImageButton
-                android:id="@+id/turnOffApartmentLightsBtn"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/turn_off_apartment_lights"
-                android:width="60dp"
-                android:scaleType="fitCenter"/>
-        </LinearLayout>
-
-    </LinearLayout>
+    <include layout="@layout/bottom_panel"/>
 </LinearLayout>

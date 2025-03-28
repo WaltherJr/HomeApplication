@@ -8,9 +8,12 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import com.eriksandsten.homeautomation2.activity.main.BaseActivity;
+import com.eriksandsten.homeautomation2.activity.main.MainActivity;
+
 import java.lang.reflect.Method;
 import lombok.Getter;
 
@@ -19,17 +22,29 @@ public class BluetoothSpeaker {
     private final BluetoothDevice speakers;
     @Getter
     private final String name;
+    private final MainActivity mainActivity;
 
-    public BluetoothSpeaker(BaseActivity activity) {
-        bluetoothAdapter = ((BluetoothManager) activity.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
-        speakers = bluetoothAdapter.getRemoteDevice(activity.getProperty("speakers_mac_address"));
+    public BluetoothSpeaker(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+        this.bluetoothAdapter = ((BluetoothManager) mainActivity.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+        this.speakers = bluetoothAdapter.getRemoteDevice(mainActivity.getProperty("speakers_mac_address"));
 
-        if (ActivityCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.BLUETOOTH_CONNECT }, 1);
+        if (ActivityCompat.checkSelfPermission(mainActivity.getApplicationContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mainActivity, new String[] { Manifest.permission.BLUETOOTH_CONNECT }, 1);
         }
 
-        name = speakers.getName();
-        bluetoothAdapter.getProfileProxy(activity.getApplicationContext(), profileListener, BluetoothProfile.A2DP);
+        this.name = speakers.getName();
+        bluetoothAdapter.getProfileProxy(mainActivity.getApplicationContext(), profileListener, BluetoothProfile.A2DP);
+    }
+
+    public void volumeUp() {
+        AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+    }
+
+    public void volumeDown() {
+        AudioManager audioManager = (AudioManager) mainActivity.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
     }
 
     BluetoothProfile.ServiceListener profileListener = new BluetoothProfile.ServiceListener() {
@@ -41,7 +56,7 @@ public class BluetoothSpeaker {
                 try {
                     Method connectMethod = bluetoothA2dp.getClass().getMethod("connect", BluetoothDevice.class);
                     connectMethod.invoke(bluetoothA2dp, speakers);
-                    Log.d("Bluetooth", "Connected to speaker: " + name);
+                    mainActivity.getMainActivityGUI().setBluetoothSpeakersText(name);
                 } catch (final Exception e) {
                     e.printStackTrace();
                 }
@@ -50,7 +65,7 @@ public class BluetoothSpeaker {
 
         @Override
         public void onServiceDisconnected(int profile) {
-            Log.d("Bluetooth", "A2DP Service Disconnected");
+            mainActivity.getMainActivityGUI().setBluetoothSpeakersText(null);
         }
     };
 }

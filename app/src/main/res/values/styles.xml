@@ -3,4 +3,9 @@
     <style name="TabSelected">
         <item name="fontWeight">700</item>
     </style>
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontWeight">700</item>
+    </style>
 </resources>

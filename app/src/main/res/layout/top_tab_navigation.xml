@@ -1,0 +1,37 @@
+
+<com.google.android.material.tabs.TabLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tabLayout"
+    android:background="@color/tabs_color_bg"
+    app:tabTextColor="@color/tabs_color_fg"
+    app:tabSelectedTextColor="@color/tabs_color_fg"
+    app:tabIndicatorColor="@color/tabs_indicator"
+    app:tabIndicatorHeight="5dp"
+    android:padding="0dp"
+    app:tabTextAppearance="@style/CustomTabText"
+    android:layout_gravity="bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.tabs.TabItem
+        android:text="@string/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.tabs.TabItem
+        android:text="@string/laundry_booking_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.tabs.TabItem
+        android:text="@string/grocery_list_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.tabs.TabItem
+        android:text="@string/on_tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.tabs.TabItem
+        android:text="@string/spotify_player_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</com.google.android.material.tabs.TabLayout>
